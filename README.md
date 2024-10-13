@@ -1,75 +1,58 @@
-<<<<<<< HEAD
-# jdraw README
+# jdraw
 
-This is the README for your extension "jdraw". After writing up a brief description, we recommend including the following sections.
+**jdraw** is a VSCode extension that allows you to convert Java code into UML diagrams and generate UML diagrams from modeling languages or code. This extension uses Draw.io Integration to visualize UML diagrams within VSCode.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Java to UML**: Convert Java code into UML diagrams.
+- **Java to Modeling Language**: Generate an intermediate modeling language from Java code for database modeling or other systems.
+- **Modeling Language to UML**: Convert a modeling language into UML diagrams.
+- **UML to Java**: Generate Java code from a UML diagram.
 
-For example if there is an image subfolder under your extension project workspace:
+## Prerequisites
 
-\!\[feature X\]\(images/feature-x.png\)
+- **VSCode** (version 1.94.0 or higher)
+- **Draw.io Integration Extension** (to display UML diagrams)
+  - Note: The extension does not require PlantUML unless you wish to generate and view PlantUML files.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Installation
 
-## Requirements
+Clone the project to your local directory:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+```bash
+git clone https://github.com/your-username/jdraw.git
+```
 
-## Extension Settings
+Navigate to the project directory:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+```bash
+cd jdraw
+```
 
-For example:
+Install the dependencies:
 
-This extension contributes the following settings:
+```bash
+npm install
+```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Usage
 
-## Known Issues
+1. Open the project in VSCode.
+2. Launch the extension in development mode:
+   - Press **F5** to open a new VSCode window with the extension loaded.
+3. Open a Java file that you want to convert.
+4. Run the desired command:
+   - Press **Ctrl+Shift+P** (or **Cmd+Shift+P** on Mac) to open the command palette.
+   - Type "**JDraw: Convert Java to UML**" to generate an organized display and UML code.
+   - Type "**JDraw: Convert Java to Modeling Language**" to generate the intermediate modeling language output.
+5. View the results:
+   - The output will appear in the debug console.
+   - Optionally, you can configure the extension to save the output to a file or display it in a dedicated view.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Contributing
 
-## Release Notes
+Contributions are welcome! Please submit a pull request or open an issue to discuss changes or improvements.
 
-Users appreciate release notes as you update your extension.
+## License
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
-=======
-# Jdraw
->>>>>>> 50d53509e1939e2a82803a2a0a3ac16c5583e517
+This project is licensed under the MIT License.
