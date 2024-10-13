@@ -1,10 +1,9 @@
 // commands/javaToUml.ts
 import * as vscode from 'vscode';
-import {
-    extractClassDetails,
-    displayClassDetails,
-    generatePlantUML,
-} from '../utils';
+import { extractClassDetails } from '../utils';
+import { generateDrawioXML } from '../drawUtils';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export function javaToUmlCommand(context: vscode.ExtensionContext) {
     const disposable = vscode.commands.registerCommand('jdraw.javaToUml', async () => {
@@ -19,15 +18,24 @@ export function javaToUmlCommand(context: vscode.ExtensionContext) {
 
                 vscode.window.showInformationMessage('Analyse Java réussie.');
 
-                // Afficher les classes trouvées de manière organisée
-                displayClassDetails(classDetails);
+                // Générer le XML Draw.io
+                const xmlContent = generateDrawioXML(classDetails);
 
-                // Générer le code PlantUML
-                const umlCode = generatePlantUML(classDetails);
-                console.log('\nCode PlantUML généré:\n');
-                console.log(umlCode);
+                // Sauvegarder le contenu XML dans un fichier .drawio
+                const workspaceFolders = vscode.workspace.workspaceFolders;
+                if (workspaceFolders) {
+                    const workspaceRoot = workspaceFolders[0].uri.fsPath;
+                    const filePath = path.join(workspaceRoot, 'diagram.drawio');
+                    fs.writeFileSync(filePath, xmlContent, 'utf8');
+                    vscode.window.showInformationMessage(`Diagramme UML Draw.io sauvegardé à ${filePath}`);
 
-                // Optionnel : Enregistrer ou afficher le code UML dans une vue dédiée
+                    // Ouvrir le fichier dans l'éditeur Draw.io
+                    const document = await vscode.workspace.openTextDocument(filePath);
+                    await vscode.window.showTextDocument(document);
+
+                } else {
+                    vscode.window.showErrorMessage('Aucun dossier ouvert pour sauvegarder le diagramme.');
+                }
 
             } catch (error) {
                 vscode.window.showErrorMessage('Erreur lors de l\'analyse du code Java.');

@@ -12,7 +12,9 @@ export interface FieldDetails {
     name: string;
     type: string;
     modifiers: string[];
+    isCollection?: boolean; // Ajout de la propriété isCollection
 }
+
 
 export interface MethodDetails {
     name: string;
@@ -35,7 +37,7 @@ export interface Relation {
     cardinalityTo?: string;
 }
 
-// Fonction pour extraire les classes, attributs, méthodes et modificateurs depuis l'AST Java
+// utils.ts (si besoin de modifications)
 export function extractClassDetails(ast: any): ClassDetails[] {
     const classes: ClassDetails[] = [];
 
@@ -76,14 +78,26 @@ export function extractClassDetails(ast: any): ClassDetails[] {
                     const fieldName =
                         fieldDecl.children?.variableDeclaratorList?.[0]?.children?.variableDeclarator?.[0]?.children
                             ?.variableDeclaratorId?.[0]?.children?.Identifier?.[0]?.image;
-                    const fieldType = extractType(fieldDecl.children?.unannType?.[0]);
+                    let fieldType = extractType(fieldDecl.children?.unannType?.[0]);
                     const fieldModifiers = extractModifiers(fieldDecl);
+                    let isCollection = false;
+
+                    // Vérifier si le type est une collection (par exemple, List<...> ou Set<...>)
+                    if (fieldType.startsWith('List<') || fieldType.startsWith('Set<')) {
+                        isCollection = true;
+                        // Extraire le type réel contenu dans la collection
+                        const typeMatch = fieldType.match(/<(.*?)>/);
+                        if (typeMatch && typeMatch[1]) {
+                            fieldType = typeMatch[1];
+                        }
+                    }
 
                     if (fieldName) {
                         fields.push({
                             name: fieldName,
                             type: fieldType,
                             modifiers: fieldModifiers,
+                            isCollection: isCollection, // Ajouter isCollection au champ
                         });
                     }
                 }
@@ -125,9 +139,10 @@ export function extractClassDetails(ast: any): ClassDetails[] {
     return classes;
 }
 
+
 // Extrait le type depuis un nœud unannType ou result
 export function extractType(typeNode: any): string {
-    if (!typeNode) return 'void';
+    if (!typeNode) {return 'void';}
 
     const primitiveTypeWithSuffix = typeNode.children?.unannPrimitiveTypeWithOptionalDimsSuffix?.[0];
     if (primitiveTypeWithSuffix) {
@@ -285,9 +300,9 @@ export function generatePlantUML(classDetails: ClassDetails[]): string {
 
 // Fonction pour mapper les modificateurs de visibilité aux symboles PlantUML
 export function mapModifierToVisibility(modifiers: string[]): string {
-    if (modifiers.includes('public')) return '+';
-    if (modifiers.includes('private')) return '-';
-    if (modifiers.includes('protected')) return '#';
+    if (modifiers.includes('public')) {return '+';}
+    if (modifiers.includes('private')) {return '-';}
+    if (modifiers.includes('protected')) {return '#';}
     return '~'; // package-private ou sans modificateur
 }
 
