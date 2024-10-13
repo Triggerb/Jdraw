@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # jdraw README
 
 This is the README for your extension "jdraw". After writing up a brief description, we recommend including the following sections.
@@ -69,3 +70,6 @@ You can author your README using Visual Studio Code. Here are some useful editor
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
+=======
+# Jdraw
+>>>>>>> 50d53509e1939e2a82803a2a0a3ac16c5583e517
